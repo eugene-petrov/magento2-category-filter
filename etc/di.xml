@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Model\Layer\Category\CollectionFilter">
+        <plugin name="ReadyToGo_CategoryFilter::add-filters"
+                type="ReadyToGo\CategoryFilter\Plugin\Magento\Catalog\Model\Layer\Category\CollectionFilter\CategoryFilter" />
+    </type>
+    <type name="Magento\Catalog\Block\Product\ProductList\Toolbar">
+        <plugin name="ReadyToGo_CategoryFilter::change-get-size-to-count"
+                type="ReadyToGo\CategoryFilter\Plugin\Magento\Catalog\Block\Product\ProductList\Toolbar\ChangeGetSizeToCount" />
+    </type>
+</config>
