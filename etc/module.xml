@@ -4,6 +4,8 @@
     <module name="ReadyToGo_CategoryFilter">
         <sequence>
             <module name="Magento_Catalog" />
+            <module name="Magento_CatalogSearch" />
+            <module name="Magento_Elasticsearch" />
         </sequence>
     </module>
 </config>

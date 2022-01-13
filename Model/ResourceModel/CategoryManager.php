@@ -21,13 +21,32 @@ class CategoryManager
         $this->resourceConnection = $resourceConnection;
     }
 
-    public function getProductIdsByCategoryIds(array $categoryIds)
+    /**
+     * @param array $categoryIds
+     * @return array
+     */
+    public function getProductIdsByCategoryIds(array $categoryIds): array
     {
         $connection = $this->resourceConnection->getConnection();
 
         $select = $connection->select();
         $select->from($connection->getTableName('catalog_category_product'), ['product_id']);
         $select->where('category_id IN (?)', $categoryIds);
+
+        return $connection->fetchCol($select);
+    }
+
+    /**
+     * @param array $productIds
+     * @return array
+     */
+    public function getSkuByProductIds(array $productIds): array
+    {
+        $connection = $this->resourceConnection->getConnection();
+        $select = $connection->select();
+        $select->from($connection->getTableName('catalog_product_entity'), ['sku']);
+        $select->where('entity_id IN (?)', $productIds);
+
         return $connection->fetchCol($select);
     }
 }
