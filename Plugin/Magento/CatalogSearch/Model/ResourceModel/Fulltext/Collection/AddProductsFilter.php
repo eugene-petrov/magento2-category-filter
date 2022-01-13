@@ -2,15 +2,13 @@
 
 declare(strict_types=1);
 
-namespace ReadyToGo\CategoryFilter\Plugin\Magento\Catalog\Model\Layer\Category\CollectionFilter;
+namespace ReadyToGo\CategoryFilter\Plugin\Magento\CatalogSearch\Model\ResourceModel\Fulltext\Collection;
 
-use ReadyToGo\CategoryFilter\Model\ResourceModel\CategoryManager;
-use Magento\Catalog\Model\Category;
-use Magento\Catalog\Model\Layer\Category\CollectionFilter;
-use Magento\Catalog\Model\ResourceModel\Product\Collection;
+use Magento\CatalogSearch\Model\ResourceModel\Fulltext\Collection;
 use Magento\Framework\App\RequestInterface;
+use ReadyToGo\CategoryFilter\Model\ResourceModel\CategoryManager;
 
-class CategoryFilter
+class AddProductsFilter
 {
     /**
      * @var RequestInterface
@@ -33,20 +31,14 @@ class CategoryFilter
     }
 
     /**
-     * @param CollectionFilter $subject
-     * @param null $result
-     * @param Collection $collection
-     * @param Category $category
-     * @return null
+     * @param Collection $subject
+     * @param Collection $result
+     * @return Collection
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterFilter(
-        CollectionFilter $subject,
-        $result,
-        Collection $collection,
-        Category $category
-    ) {
+    public function afterAddCategoryFilter(Collection $subject, Collection $result): Collection
+    {
         $catIds = $this->request->getParam('cat_ids');
         if (!$catIds) {
             return $result;
@@ -54,7 +46,8 @@ class CategoryFilter
 
         $catIds = explode(',', $catIds);
         $productIds = $this->categoryManager->getProductIdsByCategoryIds($catIds);
-        $collection->getSelect()->where('e.entity_id IN (?)', $productIds);
+        $skuList = $this->categoryManager->getSkuByProductIds($productIds);
+        $result->addFieldToFilter('sku', $skuList);
 
         return $result;
     }

@@ -6,8 +6,20 @@
         <plugin name="ReadyToGo_CategoryFilter::add-filters"
                 type="ReadyToGo\CategoryFilter\Plugin\Magento\Catalog\Model\Layer\Category\CollectionFilter\CategoryFilter" />
     </type>
-    <type name="Magento\Catalog\Block\Product\ProductList\Toolbar">
-        <plugin name="ReadyToGo_CategoryFilter::change-get-size-to-count"
-                type="ReadyToGo\CategoryFilter\Plugin\Magento\Catalog\Block\Product\ProductList\Toolbar\ChangeGetSizeToCount" />
+    <type name="Magento\CatalogSearch\Model\ResourceModel\Fulltext\Collection">
+        <plugin name="ReadyToGo_CategoryFilter::add-products-filter"
+                type="ReadyToGo\CategoryFilter\Plugin\Magento\CatalogSearch\Model\ResourceModel\Fulltext\Collection\AddProductsFilter" />
+    </type>
+    <type name="Magento\Elasticsearch\SearchAdapter\Filter\Builder\Term">
+        <plugin name="ReadyToGo_CategoryFilter::add-sku-term"
+                type="ReadyToGo\CategoryFilter\Plugin\Magento\Elasticsearch\SearchAdapter\Filter\Builder\Term\AddSkuTerm" />
+    </type>
+    <type name="Magento\Elasticsearch\Model\Adapter\BatchDataMapper\ProductDataMapper">
+        <plugin name="ReadyToGo_CategoryFilter::AdditionalBatchDataMapper"
+                type="ReadyToGo\CategoryFilter\Plugin\Magento\Elasticsearch\Model\Adapter\BatchDataMapper\ProductDataMapper\AddSkuDataMapper" />
+    </type>
+    <type name="Magento\Elasticsearch\Elasticsearch5\Model\Adapter\FieldMapper\ProductFieldMapperProxy">
+        <plugin name="ReadyToGo_CategoryFilter::AdditionalFieldMapperElasticSearch5"
+                type="ReadyToGo\CategoryFilter\Plugin\Magento\Elasticsearch\Elasticsearch5\Model\Adapter\FieldMapper\ProductFieldMapperProxy\AddSkuFieldMapper" />
     </type>
 </config>

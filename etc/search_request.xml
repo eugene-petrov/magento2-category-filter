@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<requests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:framework:Search/etc/search_request.xsd">
+    <request query="catalog_view_container" index="catalogsearch_fulltext">
+        <queries>
+            <query xsi:type="boolQuery" name="catalog_view_container" boost="1">
+                <queryReference clause="should" ref="sku"/>
+            </query>
+            <query name="sku" xsi:type="filteredQuery">
+                <filterReference clause="must" ref="sku_filter"/>
+            </query>
+        </queries>
+        <filters>
+            <filter xsi:type="termFilter" name="sku_filter" field="sku" value="$sku$"/>
+        </filters>
+        <aggregations>
+            <bucket name="sku_bucket" field="sku" xsi:type="termBucket">
+                <metrics>
+                    <metric type="count"/>
+                </metrics>
+            </bucket>
+            <bucket name="sku_value_bucket" field="sku_value" xsi:type="termBucket">
+                <metrics>
+                    <metric type="count"/>
+                </metrics>
+            </bucket>
+        </aggregations>
+    </request>
+</requests>
